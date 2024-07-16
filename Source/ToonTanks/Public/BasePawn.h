@@ -8,6 +8,7 @@
 
 class UCapsuleComponent;
 class UStaticMeshComponent;
+class USceneComponent;
 UCLASS()
 class TOONTANKS_API ABasePawn : public APawn
 {
@@ -28,12 +29,16 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
-	UCapsuleComponent* CubeMesh;
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UCapsuleComponent* CapsuleComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* BaseMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* TurretMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	USceneComponent* ProjectileSpawnPoint;
 };

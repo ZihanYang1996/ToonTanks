@@ -13,16 +13,20 @@ ABasePawn::ABasePawn()
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Create a capsule mesh component and set it as the root component
-	CubeMesh = CreateDefaultSubobject<UCapsuleComponent>("Capsule");
-	RootComponent = CubeMesh;
+	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
+	RootComponent = CapsuleComponent;
 
 	// Create a static mesh component and attach it to the root component
-	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>("BaseMesh");
+	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
 	BaseMesh->SetupAttachment(RootComponent);
 
 	// Create another static mesh component and attach it to previous static mesh component
-	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>("TurretMesh");
+	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Turret Mesh"));
 	TurretMesh->SetupAttachment(BaseMesh);
+
+	// Create a scene component for projectile spawn point
+	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
+	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
 
 }
 
