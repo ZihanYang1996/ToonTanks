@@ -78,7 +78,7 @@ void ATank::Move(const FInputActionValue& Value)
 	*/
 	
 	FVector DeltaLocation = ForwardVector * MovementVector.Y * MoveSpeed * GetWorld()->GetDeltaSeconds() + RightVector * MovementVector.X * MoveSpeed * GetWorld()->GetDeltaSeconds();
-	AddActorWorldOffset(DeltaLocation);
+	AddActorWorldOffset(DeltaLocation, true);
 	
 }
 
