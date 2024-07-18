@@ -11,6 +11,8 @@
 
 ATank::ATank()
 {
+	PrimaryActorTick.bCanEverTick = true;
+	
 	// Use the controller rotation yaw
 	// bUseControllerRotationYaw = true;
 	
@@ -22,6 +24,16 @@ ATank::ATank()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
 	Camera->bUsePawnControlRotation = false;
+}
+
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// Set the player controller to the tank
+	PlayerControllerRef = Cast<APlayerController>(GetController());
+	PlayerControllerRef->bShowMouseCursor = true;
+
 }
 
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -42,6 +54,12 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		EnhancedInputComponent->BindAction(IA_Look, ETriggerEvent::Triggered, this, &ATank::Look);
 	}
 }
+
+void ATank::Tick(float DeltaSeconds)
+{
+	GetHitResultUnderCursor();
+}
+
 
 void ATank::Move(const FInputActionValue& Value)
 {
@@ -94,5 +112,13 @@ void ATank::Look(const FInputActionValue& Value)
 	AddControllerYawInput(LookVector.X * RotationSpeed.X * GetWorld()->GetDeltaSeconds());
 	AddControllerPitchInput(LookVector.Y * RotationSpeed.Y * GetWorld()->GetDeltaSeconds());
 }
+
+void ATank::GetHitResultUnderCursor()
+{
+	FHitResult OutHit;
+	PlayerControllerRef->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, OutHit);
+	DrawDebugSphere(GetWorld(), OutHit.ImpactPoint, 25.0f, 12, FColor::Red, false, 1.0f);
+}
+
 
 

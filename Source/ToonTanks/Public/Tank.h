@@ -24,6 +24,12 @@ public:
 
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
+	virtual void Tick(float DeltaSeconds) override;
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Components", meta=(AllowPrivateAccess = "true"))
@@ -41,9 +47,13 @@ private:
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputMappingContext* IMC_Tank;
 
+	APlayerController* PlayerControllerRef;
+
 	void Move(const FInputActionValue& Value);
 
 	void Look(const FInputActionValue& Value);
+
+	void GetHitResultUnderCursor();
 
 public:
 	UPROPERTY(EditAnywhere, Category="Movement")
@@ -51,4 +61,6 @@ public:
 
 	UPROPERTY(EditAnywhere, Category="Movement")
 	FVector2D RotationSpeed = FVector2D(100.0f, 100.0f);
+
+	
 };
