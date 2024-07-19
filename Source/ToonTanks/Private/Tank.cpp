@@ -7,7 +7,6 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "Kismet/GameplayStatics.h"
 
 ATank::ATank()
 {
@@ -33,7 +32,7 @@ void ATank::BeginPlay()
 	// Set the player controller to the tank
 	PlayerControllerRef = Cast<APlayerController>(GetController());
 	// Show the mouse cursor
-	PlayerControllerRef->bShowMouseCursor = true;
+	// PlayerControllerRef->bShowMouseCursor = true;
 }
 
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -58,7 +57,11 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::Tick(float DeltaSeconds)
 {
-	GetHitResultUnderCursor();
+	FHitResult OutHit;
+	if (GetHitResultUnderCursor(OutHit))
+	{
+		RotateTurret(OutHit.ImpactPoint);
+	}
 }
 
 
@@ -90,11 +93,12 @@ void ATank::Move(const FInputActionValue& Value)
 	// Keep it for now
 	if (MovementVector.Y != 0)
 	{
-		FVector DeltaLocation = ForwardVector * MovementVector.Y * MoveSpeed * GetWorld()->GetDeltaSeconds() + RightVector *
+		FVector DeltaLocation = ForwardVector * MovementVector.Y * MoveSpeed * GetWorld()->GetDeltaSeconds() +
+			RightVector *
 			MovementVector.X * MoveSpeed * GetWorld()->GetDeltaSeconds();
 		AddActorWorldOffset(DeltaLocation, true);
 	}
-	
+
 	// Set the controller yaw input based on the movement vector's X value (A/D or Left/Right)
 	AddControllerYawInput(MovementVector.X * RotationSpeed.X * GetWorld()->GetDeltaSeconds());
 }
@@ -113,9 +117,9 @@ void ATank::Look(const FInputActionValue& Value)
 	AddControllerPitchInput(LookVector.Y * RotationSpeed.Y * GetWorld()->GetDeltaSeconds());
 }
 
-void ATank::GetHitResultUnderCursor()
+bool ATank::GetHitResultUnderCursor(FHitResult& OutHit)
 {
-	FHitResult OutHit;
-	PlayerControllerRef->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, OutHit);
+	bool bIsHit = PlayerControllerRef->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, OutHit);
 	DrawDebugSphere(GetWorld(), OutHit.ImpactPoint, 25.0f, 12, FColor::Red, false, 1.0f);
+	return bIsHit;
 }

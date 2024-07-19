@@ -53,7 +53,7 @@ private:
 
 	void Look(const FInputActionValue& Value);
 
-	void GetHitResultUnderCursor();
+	bool GetHitResultUnderCursor(FHitResult& OutHit);
 
 public:
 	UPROPERTY(EditAnywhere, Category="Movement")
