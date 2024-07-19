@@ -88,15 +88,25 @@ void ATank::Move(const FInputActionValue& Value)
 	// Only move the actor if the movement vector is not zero, so that the actor can rotate in place (around the Z axis)
 	// May or may not keep this behavior depending on the gameplay I want to achieve
 	// Keep it for now
-	if (MovementVector.Y != 0)
+	if (MovementVector.Y > 0)
 	{
 		FVector DeltaLocation = ForwardVector * MovementVector.Y * MoveSpeed * GetWorld()->GetDeltaSeconds() + RightVector *
 			MovementVector.X * MoveSpeed * GetWorld()->GetDeltaSeconds();
-		AddActorWorldOffset(DeltaLocation, true);		
+		AddActorWorldOffset(DeltaLocation, true);
+		
+		// Set the controller yaw input based on the movement vector's X value (A/D or Left/Right)
+		AddControllerYawInput(MovementVector.X * RotationSpeed.X * GetWorld()->GetDeltaSeconds());
 	}
-	
-	// Set the controller yaw input based on the movement vector's X value (A/D or Left/Right)
-	AddControllerYawInput(MovementVector.X * RotationSpeed.X * GetWorld()->GetDeltaSeconds());
+	else if (MovementVector.Y < 0)
+	{
+		FVector DeltaLocation = ForwardVector * MovementVector.Y * MoveSpeed * GetWorld()->GetDeltaSeconds() + RightVector *
+			MovementVector.X * MoveSpeed * GetWorld()->GetDeltaSeconds();
+		AddActorWorldOffset(DeltaLocation, true);
+		
+		// Set the controller yaw input based on the movement vector's X value (A/D or Left/Right)
+		// When moving backwards, the rotation should be reversed, to simulate the tank turning around
+		AddControllerYawInput(-MovementVector.X * RotationSpeed.X * GetWorld()->GetDeltaSeconds());		
+	}
 }
 
 // Not used, at least for now
