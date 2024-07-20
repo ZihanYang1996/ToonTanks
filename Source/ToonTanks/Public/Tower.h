@@ -10,6 +10,7 @@
  * 
  */
 class ATank;
+struct FTimerHandle;
 UCLASS()
 class TOONTANKS_API ATower : public ABasePawn
 {
@@ -24,6 +25,15 @@ protected:
 private:
 	ATank* Tank;
 
+	FTimerHandle FireRateTimerHandle;
+
+	UPROPERTY(EditAnywhere, Category="Turret")
+	float FireRate = 2.0f;
+
 	UPROPERTY(EditAnywhere, Category="Turret")
 	float FireRange = 500.0f;
+
+	bool InFiringRange();
+
+	void CheckFireCondition();
 };
