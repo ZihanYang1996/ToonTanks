@@ -61,3 +61,9 @@ void ABasePawn::RotateTurret(const FVector& LookAtTarget)
 	
 	TurretMesh->SetWorldRotation(newDirection);
 }
+
+void ABasePawn::Fire()
+{
+	DrawDebugSphere(GetWorld(), ProjectileSpawnPoint->GetComponentLocation(), 25.0f, 12, FColor::Red, false, 1.0f);
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Firing")));
+}
