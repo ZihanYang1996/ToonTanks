@@ -51,7 +51,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EnhancedInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered, this, &ATank::Move);
-		// EnhancedInputComponent->BindAction(IA_Look, ETriggerEvent::Triggered, this, &ATank::Look);
+		EnhancedInputComponent->BindAction(IA_Fire, ETriggerEvent::Started, this, &ATank::Fire);
 	}
 }
 
@@ -103,23 +103,8 @@ void ATank::Move(const FInputActionValue& Value)
 	AddControllerYawInput(MovementVector.X * RotationSpeed.X * GetWorld()->GetDeltaSeconds());
 }
 
-// Not used, at least for now
-void ATank::Look(const FInputActionValue& Value)
-{
-	// Print on screen the value of the input action
-	// if (GEngine)
-	// {
-	// 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Look: %s"), *Value.ToString()));
-	// }
-
-	FVector2D LookVector = Value.Get<FVector2D>();
-	AddControllerYawInput(LookVector.X * RotationSpeed.X * GetWorld()->GetDeltaSeconds());
-	AddControllerPitchInput(LookVector.Y * RotationSpeed.Y * GetWorld()->GetDeltaSeconds());
-}
 
 bool ATank::GetHitResultUnderCursor(FHitResult& OutHit)
 {
-	bool bIsHit = PlayerControllerRef->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, OutHit);
-	DrawDebugSphere(GetWorld(), OutHit.ImpactPoint, 25.0f, 12, FColor::Red, false, 1.0f);
-	return bIsHit;
+	return PlayerControllerRef->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, OutHit);
 }

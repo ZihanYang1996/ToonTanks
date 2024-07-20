@@ -42,7 +42,7 @@ private:
 	UInputAction* IA_Move;
 
 	UPROPERTY(EditAnywhere, Category="Input")
-	UInputAction* IA_Look;
+	UInputAction* IA_Fire;
 
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputMappingContext* IMC_Tank;
@@ -50,9 +50,7 @@ private:
 	APlayerController* PlayerControllerRef;
 
 	void Move(const FInputActionValue& Value);
-
-	void Look(const FInputActionValue& Value);
-
+	
 	bool GetHitResultUnderCursor(FHitResult& OutHit);
 
 public:
