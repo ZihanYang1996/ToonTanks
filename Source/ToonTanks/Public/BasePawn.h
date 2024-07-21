@@ -9,6 +9,7 @@
 class UCapsuleComponent;
 class UStaticMeshComponent;
 class USceneComponent;
+class AProjectile;
 UCLASS()
 class TOONTANKS_API ABasePawn : public APawn
 {
@@ -48,5 +49,8 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Turret")
 	float TurretRotationSpeed = 200.0f;
+
+	UPROPERTY(EditAnywhere, Category="Turret")
+	TSubclassOf<AProjectile> ProjectileClass;
 	
 };
