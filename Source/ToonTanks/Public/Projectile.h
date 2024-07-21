@@ -7,6 +7,7 @@
 #include "Projectile.generated.h"
 
 class UStaticMeshComponent;
+class UProjectileMovementComponent;
 UCLASS()
 class TOONTANKS_API AProjectile : public AActor
 {
@@ -27,5 +28,8 @@ public:
 private:
 	UPROPERTY(EditAnywhere, Category="Components");
 	UStaticMeshComponent* Mesh;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Components", meta=(AllowPrivateAccess = "true"))
+	UProjectileMovementComponent* ProjectileMovement;
 
 };
