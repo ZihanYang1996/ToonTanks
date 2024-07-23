@@ -56,6 +56,7 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 		{
 			auto DameTypeClass = UDamageType::StaticClass();
 			UGameplayStatics::ApplyDamage(OtherActor, Damage, InstigatorController, this, DameTypeClass);
+			Destroy();
 		}
 	}
 }
