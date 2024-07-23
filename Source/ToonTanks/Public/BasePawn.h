@@ -52,5 +52,8 @@ private:
 
 	UPROPERTY(EditAnywhere, Category="Turret")
 	TSubclassOf<AProjectile> ProjectileClass;
+
+	UPROPERTY(EditAnywhere, Category="Turret")
+	float Damage = 10.0f;
 	
 };
