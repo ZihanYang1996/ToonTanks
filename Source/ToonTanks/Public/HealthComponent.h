@@ -7,6 +7,8 @@
 #include "HealthComponent.generated.h"
 
 
+class AToonTanksGameMode;
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class TOONTANKS_API UHealthComponent : public UActorComponent
 {
@@ -29,6 +31,8 @@ private:
 	float MaxHealth = 100.0f;
 
 	float CurrentHealth = 0.0f;
+
+	AToonTanksGameMode* ToonTanksGameMode;
 
 	UFUNCTION()
 	void TakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser);

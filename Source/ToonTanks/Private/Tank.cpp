@@ -32,7 +32,7 @@ void ATank::BeginPlay()
 	// Set the player controller to the tank
 	TankPlayerController = Cast<APlayerController>(GetController());
 	// Show the mouse cursor
-	// TankPlayerController->bShowMouseCursor = true;
+	TankPlayerController->bShowMouseCursor = true;
 }
 
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -112,6 +112,18 @@ bool ATank::GetHitResultUnderCursor(FHitResult& OutHit)
 void ATank::HandleDestruction()
 {
 	Super::HandleDestruction();
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Tank Destroyed!"));
 	SetActorHiddenInGame(true);
 	SetActorTickEnabled(false);
+}
+
+void ATank::DisablePlayerInput()
+{
+	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<
+		UEnhancedInputLocalPlayerSubsystem>(TankPlayerController->GetLocalPlayer()))
+	{
+		Subsystem->RemoveMappingContext(IMC_Tank);
+	}
+	// Or use the following code to disable the player input
+	// DisableInput(TankPlayerController);
 }

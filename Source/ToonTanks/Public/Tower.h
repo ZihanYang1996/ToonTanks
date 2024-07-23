@@ -11,6 +11,7 @@
  */
 class ATank;
 struct FTimerHandle;
+
 UCLASS()
 class TOONTANKS_API ATower : public ABasePawn
 {
@@ -19,10 +20,10 @@ class TOONTANKS_API ATower : public ABasePawn
 public:
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void HandleDestruction() override;
+
 protected:
 	virtual void BeginPlay() override;
-
-	virtual void HandleDestruction() override;
 
 private:
 	ATank* Tank;
