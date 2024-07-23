@@ -24,4 +24,10 @@ protected:
 
 public:
 	void ActorDie(AActor* DeadActor);
+
+private:
+	void HandleGameStart();
+
+	UPROPERTY(EditAnywhere, Category="Game Loop")
+	float StartDelay = 5.0f;
 };

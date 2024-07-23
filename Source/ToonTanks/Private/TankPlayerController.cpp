@@ -22,14 +22,14 @@ void ATankPlayerController::SetPlayerInputEnabled(bool bEnabled)
 	{
 		// Show the mouse cursor
 		bShowMouseCursor = true;
-		
+		// EnableInput(this);
 		Subsystem->AddMappingContext(IMC_Tank, 0);
 	}
 	else
 	{
 		// Show the mouse cursor
 		bShowMouseCursor = false;
-		
+		// DisableInput(this);
 		Subsystem->RemoveMappingContext(IMC_Tank);
 	}
 }
