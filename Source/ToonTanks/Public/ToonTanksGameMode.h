@@ -6,6 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "ToonTanksGameMode.generated.h"
 
+class ATankPlayerController;
 class ATank;
 /**
  * 
@@ -15,6 +16,8 @@ class TOONTANKS_API AToonTanksGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 	ATank* PlayerTank;
+
+	ATankPlayerController* TankPlayerController;
 
 protected:
 	virtual void BeginPlay() override;

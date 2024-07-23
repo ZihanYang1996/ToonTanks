@@ -46,8 +46,6 @@ private:
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* IA_Fire;
 
-	UPROPERTY(EditAnywhere, Category="Input")
-	UInputMappingContext* IMC_Tank;
 
 	APlayerController* TankPlayerController;
 
@@ -61,6 +59,4 @@ public:
 
 	UPROPERTY(EditAnywhere, Category="Movement")
 	FVector2D RotationSpeed = FVector2D(100.0f, 100.0f);
-
-	void DisablePlayerInput();
 };
