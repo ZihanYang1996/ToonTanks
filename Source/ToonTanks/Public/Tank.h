@@ -30,6 +30,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	virtual void HandleDestruction() override;
+
 private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Components", meta=(AllowPrivateAccess = "true"))
@@ -47,7 +49,7 @@ private:
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputMappingContext* IMC_Tank;
 
-	APlayerController* PlayerControllerRef;
+	APlayerController* TankPlayerController;
 
 	void Move(const FInputActionValue& Value);
 	

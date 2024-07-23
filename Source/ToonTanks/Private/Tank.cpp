@@ -30,9 +30,9 @@ void ATank::BeginPlay()
 	Super::BeginPlay();
 
 	// Set the player controller to the tank
-	PlayerControllerRef = Cast<APlayerController>(GetController());
+	TankPlayerController = Cast<APlayerController>(GetController());
 	// Show the mouse cursor
-	// PlayerControllerRef->bShowMouseCursor = true;
+	// TankPlayerController->bShowMouseCursor = true;
 }
 
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -106,5 +106,12 @@ void ATank::Move(const FInputActionValue& Value)
 
 bool ATank::GetHitResultUnderCursor(FHitResult& OutHit)
 {
-	return PlayerControllerRef->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, OutHit);
+	return TankPlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, OutHit);
+}
+
+void ATank::HandleDestruction()
+{
+	Super::HandleDestruction();
+	SetActorHiddenInGame(true);
+	SetActorTickEnabled(false);
 }

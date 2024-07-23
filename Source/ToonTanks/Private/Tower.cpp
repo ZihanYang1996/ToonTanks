@@ -41,3 +41,9 @@ bool ATower::InFiringRange()
 	}
 	return false;
 }
+
+void ATower::HandleDestruction()
+{
+	Super::HandleDestruction();
+	Destroy();
+}

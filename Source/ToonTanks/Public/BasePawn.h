@@ -10,6 +10,7 @@ class UCapsuleComponent;
 class UStaticMeshComponent;
 class USceneComponent;
 class AProjectile;
+
 UCLASS()
 class TOONTANKS_API ABasePawn : public APawn
 {
@@ -27,12 +28,14 @@ protected:
 
 	void Fire();
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	virtual void HandleDestruction();
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
@@ -55,5 +58,4 @@ private:
 
 	UPROPERTY(EditAnywhere, Category="Turret")
 	float Damage = 10.0f;
-	
 };
