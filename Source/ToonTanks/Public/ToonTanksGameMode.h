@@ -22,6 +22,9 @@ class TOONTANKS_API AToonTanksGameMode : public AGameModeBase
 protected:
 	virtual void BeginPlay() override;
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartGame();
+
 public:
 	void ActorDie(AActor* DeadActor);
 
@@ -29,5 +32,5 @@ private:
 	void HandleGameStart();
 
 	UPROPERTY(EditAnywhere, Category="Game Loop")
-	float StartDelay = 5.0f;
+	float StartDelay = 3.0f;
 };

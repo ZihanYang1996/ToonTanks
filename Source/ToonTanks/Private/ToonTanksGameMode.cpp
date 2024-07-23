@@ -32,6 +32,9 @@ void AToonTanksGameMode::HandleGameStart()
 {
 	PlayerTank = Cast<ATank>(UGameplayStatics::GetPlayerPawn(this, 0));
 	TankPlayerController = Cast<ATankPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+
+	StartGame();  // Call Blueprint Event
+	
 	if (TankPlayerController)
 	{
 		TankPlayerController->SetPlayerInputEnabled(false);
