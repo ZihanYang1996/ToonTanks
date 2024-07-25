@@ -13,7 +13,7 @@ void ATankPlayerController::SetupInputComponent()
 void ATankPlayerController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	RotateController(DeltaSeconds);
+	// RotateController(DeltaSeconds);
 }
 
 void ATankPlayerController::SetPlayerInputEnabled(bool bEnabled)
@@ -26,6 +26,10 @@ void ATankPlayerController::SetPlayerInputEnabled(bool bEnabled)
 	}
 	if (bEnabled)
 	{
+		// Confine the mouse cursor to the viewport
+		FInputModeGameAndUI InputMode;
+		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
+		SetInputMode(InputMode);
 		// Show the mouse cursor
 		bShowMouseCursor = true;
 		// EnableInput(this);
@@ -33,6 +37,10 @@ void ATankPlayerController::SetPlayerInputEnabled(bool bEnabled)
 	}
 	else
 	{
+		// Confine the mouse cursor to the viewport
+		FInputModeGameAndUI InputMode;
+		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+		SetInputMode(InputMode);
 		// Show the mouse cursor
 		bShowMouseCursor = false;
 		// DisableInput(this);
@@ -40,23 +48,23 @@ void ATankPlayerController::SetPlayerInputEnabled(bool bEnabled)
 	}
 }
 
-void ATankPlayerController::RotateController(float dt)
-{
-	float MouseX;
-	float MouseY;
-	FVector2D ScreenSize;
-	if (GetMousePosition(MouseX, MouseY))
-	{
-		GEngine->GameViewport->GetViewportSize(ScreenSize);
-		if (MouseX < EdgeThreshold)
-		{
-			AddYawInput(-1.0f * RotationSpeed * dt);
-			UpdateRotation(dt);
-		}
-		else if (MouseX > ScreenSize.X - EdgeThreshold)
-		{
-			AddYawInput(1.0f * RotationSpeed * dt);
-			UpdateRotation(dt);
-		}
-	}
-}
+// void ATankPlayerController::RotateController(float dt)
+// {
+// 	float MouseX;
+// 	float MouseY;
+// 	FVector2D ScreenSize;
+// 	if (GetMousePosition(MouseX, MouseY))
+// 	{
+// 		GEngine->GameViewport->GetViewportSize(ScreenSize);
+// 		if (MouseX < ScreenEdgeThreshold)
+// 		{
+// 			AddYawInput(-1.0f * CameraRotationSpeed * dt);
+// 			UpdateRotation(dt);
+// 		}
+// 		else if (MouseX > ScreenSize.X - ScreenEdgeThreshold)
+// 		{
+// 			AddYawInput(1.0f * CameraRotationSpeed * dt);
+// 			UpdateRotation(dt);
+// 		}
+// 	}
+// }

@@ -60,4 +60,15 @@ private:
 public:
 	UPROPERTY(EditAnywhere, Category="Movement")
 	float MoveSpeed = 500.0f;
+
+	UPROPERTY(EditAnywhere, Category="Movement")
+	float TankRotationSpeed = 10.0f;
+
+	UPROPERTY(EditAnywhere, Category="Input")
+	float ScreenEdgeThreshold = 100.0f;
+
+	UPROPERTY(EditAnywhere, Category="Movement")
+	float CameraRotationSpeed = 100.0f;
+
+	void RotateController(float dt);
 };

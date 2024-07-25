@@ -52,6 +52,7 @@ void ATank::Tick(float DeltaSeconds)
 	{
 		RotateTurret(OutHit.ImpactPoint);
 	}
+	RotateController(DeltaSeconds);
 	UpdateSpringArmYaw();
 }
 
@@ -78,7 +79,7 @@ void ATank::Move(const FInputActionValue& Value)
 	AddActorWorldOffset(DeltaLocation, true);
 
 	// Calculate and set rotation
-	FRotator NewRotation = FMath::RInterpTo(GetActorRotation(), DeltaLocation.Rotation(), GetWorld()->GetDeltaSeconds(), 10.0f);
+	FRotator NewRotation = FMath::RInterpTo(GetActorRotation(), DeltaLocation.Rotation(), GetWorld()->GetDeltaSeconds(), TankRotationSpeed);
 	SetActorRotation(NewRotation);
 }
 
@@ -99,4 +100,23 @@ void ATank::HandleDestruction()
 void ATank::UpdateSpringArmYaw()
 {
 	SpringArm->SetWorldRotation(FRotator(DefaultSpringArmRotation.Pitch, GetControlRotation().Yaw, 0));
+}
+
+void ATank::RotateController(float dt)
+{
+	float MouseX;
+	float MouseY;
+	FVector2D ScreenSize;
+	if (TankPlayerController->GetMousePosition(MouseX, MouseY))
+	{
+		GEngine->GameViewport->GetViewportSize(ScreenSize);
+		if (MouseX < ScreenEdgeThreshold)
+		{
+			AddControllerYawInput(-1.0f * CameraRotationSpeed * dt);
+		}
+		else if (MouseX > ScreenSize.X - ScreenEdgeThreshold)
+		{
+			AddControllerYawInput(1.0f * CameraRotationSpeed * dt);
+		}
+	}
 }
