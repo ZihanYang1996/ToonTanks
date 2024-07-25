@@ -10,6 +10,12 @@ void ATankPlayerController::SetupInputComponent()
 	SetPlayerInputEnabled(true);
 }
 
+void ATankPlayerController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	RotateController(DeltaSeconds);
+}
+
 void ATankPlayerController::SetPlayerInputEnabled(bool bEnabled)
 {
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
@@ -31,5 +37,26 @@ void ATankPlayerController::SetPlayerInputEnabled(bool bEnabled)
 		bShowMouseCursor = false;
 		// DisableInput(this);
 		Subsystem->RemoveMappingContext(IMC_Tank);
+	}
+}
+
+void ATankPlayerController::RotateController(float dt)
+{
+	float MouseX;
+	float MouseY;
+	FVector2D ScreenSize;
+	if (GetMousePosition(MouseX, MouseY))
+	{
+		GEngine->GameViewport->GetViewportSize(ScreenSize);
+		if (MouseX < EdgeThreshold)
+		{
+			AddYawInput(-1.0f * RotationSpeed * dt);
+			UpdateRotation(dt);
+		}
+		else if (MouseX > ScreenSize.X - EdgeThreshold)
+		{
+			AddYawInput(1.0f * RotationSpeed * dt);
+			UpdateRotation(dt);
+		}
 	}
 }

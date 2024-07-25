@@ -13,7 +13,7 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Use the controller rotation yaw
-	bUseControllerRotationYaw = true;
+	// bUseControllerRotationYaw = true;
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
 	SpringArm->SetupAttachment(RootComponent);
@@ -31,6 +31,8 @@ void ATank::BeginPlay()
 
 	// Set the player controller to the tank
 	TankPlayerController = Cast<APlayerController>(GetController());
+
+	DefaultSpringArmRotation = SpringArm->GetComponentRotation();
 }
 
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -50,6 +52,7 @@ void ATank::Tick(float DeltaSeconds)
 	{
 		RotateTurret(OutHit.ImpactPoint);
 	}
+	UpdateSpringArmYaw();
 }
 
 
@@ -58,7 +61,6 @@ void ATank::Move(const FInputActionValue& Value)
 	// Get the movement vector from the input action value
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
-	/* No need to manually calculate the forward and right vectors since we are using the controller rotation yaw
 	// Get yaw rotation from the controller
 	FRotator ControllerRotationYaw(0, GetControlRotation().Yaw, 0);
 
@@ -69,26 +71,15 @@ void ATank::Move(const FInputActionValue& Value)
 	// Get the forward vector and right vector from the Rotation Matrix
 	FVector ForwardVector = RotationMatrixYaw.GetUnitAxis(EAxis::X);
 	FVector RightVector = RotationMatrixYaw.GetUnitAxis(EAxis::Y);
-	*/
+	
+	
+	FVector DeltaLocation = ForwardVector * MovementVector.Y * MoveSpeed * GetWorld()->GetDeltaSeconds() +
+		RightVector * MovementVector.X * MoveSpeed * GetWorld()->GetDeltaSeconds();
+	AddActorWorldOffset(DeltaLocation, true);
 
-	// Get the forward and right vectors from the actor
-	// Only if the actor using the controller rotation yaw
-	FVector ForwardVector = GetActorForwardVector();
-	FVector RightVector = GetActorRightVector();
-
-	// Only move the actor if the movement vector is not zero, so that the actor can rotate in place (around the Z axis)
-	// May or may not keep this behavior depending on the gameplay I want to achieve
-	// Keep it for now
-	if (MovementVector.Y != 0)
-	{
-		FVector DeltaLocation = ForwardVector * MovementVector.Y * MoveSpeed * GetWorld()->GetDeltaSeconds() +
-			RightVector *
-			MovementVector.X * MoveSpeed * GetWorld()->GetDeltaSeconds();
-		AddActorWorldOffset(DeltaLocation, true);
-	}
-
-	// Set the controller yaw input based on the movement vector's X value (A/D or Left/Right)
-	AddControllerYawInput(MovementVector.X * RotationSpeed.X * GetWorld()->GetDeltaSeconds());
+	// Calculate and set rotation
+	FRotator NewRotation = FMath::RInterpTo(GetActorRotation(), DeltaLocation.Rotation(), GetWorld()->GetDeltaSeconds(), 10.0f);
+	SetActorRotation(NewRotation);
 }
 
 
@@ -103,4 +94,9 @@ void ATank::HandleDestruction()
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Tank Destroyed!"));
 	SetActorHiddenInGame(true);
 	SetActorTickEnabled(false);
+}
+
+void ATank::UpdateSpringArmYaw()
+{
+	SpringArm->SetWorldRotation(FRotator(DefaultSpringArmRotation.Pitch, GetControlRotation().Yaw, 0));
 }
