@@ -58,6 +58,9 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 
 	UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
 	
+	// GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(HitShake);
+	GetWorld()->GetFirstPlayerController()->PlayerCameraManager->StartCameraShake(HitShake);
+	
 	if (OtherActor && OtherActor != this && OtherActor != GetOwner() && OtherComp)
 	{
 		if (AController* InstigatorController = GetOwner()->GetInstigatorController())

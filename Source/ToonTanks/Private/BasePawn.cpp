@@ -76,4 +76,8 @@ void ABasePawn::HandleDestruction()
 	// TODO: Visual/sound effects
 	UGameplayStatics::SpawnEmitterAtLocation(this, DeathParticle, GetActorLocation(), GetActorRotation());
 	UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
+	if (DeathShake)
+	{
+		GetWorld()->GetFirstPlayerController()->PlayerCameraManager->StartCameraShake(DeathShake);
+	}
 }
