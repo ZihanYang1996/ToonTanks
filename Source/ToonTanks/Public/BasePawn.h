@@ -51,11 +51,11 @@ private:
 	USceneComponent* ProjectileSpawnPoint;
 
 	UPROPERTY(EditAnywhere, Category = "Turret")
-	float TurretRotationSpeed = 200.0f;
+	float TurretRotationSpeed = 50.0f;
 
 	UPROPERTY(EditAnywhere, Category="Turret")
 	TSubclassOf<AProjectile> ProjectileClass;
 
 	UPROPERTY(EditAnywhere, Category="Turret")
-	float Damage = 10.0f;
+	float Damage = 50.0f;
 };

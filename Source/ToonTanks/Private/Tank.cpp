@@ -47,13 +47,15 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::Tick(float DeltaSeconds)
 {
+	RotateController(DeltaSeconds);
+	UpdateSpringArmYaw();
+	
 	FHitResult OutHit;
 	if (GetHitResultUnderCursor(OutHit))
 	{
 		RotateTurret(OutHit.ImpactPoint);
 	}
-	RotateController(DeltaSeconds);
-	UpdateSpringArmYaw();
+
 }
 
 

@@ -54,7 +54,7 @@ void ABasePawn::RotateTurret(const FVector& LookAtTarget)
 	FRotator TargetDirection = FVector(LookAtTarget - TurretLocation).Rotation();
 	TargetDirection.Pitch = 0.0f;
 	TargetDirection.Roll = 0.0f;
-	FRotator newDirection = FMath::RInterpConstantTo(TurretMesh->GetComponentRotation(), TargetDirection,
+	FRotator newDirection = FMath::RInterpTo(TurretMesh->GetComponentRotation(), TargetDirection,
 	                                                 GetWorld()->DeltaTimeSeconds, TurretRotationSpeed);
 
 	TurretMesh->SetWorldRotation(newDirection);
