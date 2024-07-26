@@ -9,6 +9,7 @@
 class UStaticMeshComponent;
 class UProjectileMovementComponent;
 class UParticleSystem;
+class UParticleSystemComponent;
 UCLASS()
 class TOONTANKS_API AProjectile : public AActor
 {
@@ -37,6 +38,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category="Particles")
 	UParticleSystem* HitParticle;
+	
+	UPROPERTY(EditAnywhere, Category="Particles")
+	UParticleSystemComponent* TrailParticle;
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
