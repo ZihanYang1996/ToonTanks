@@ -57,10 +57,11 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 			auto DameTypeClass = UDamageType::StaticClass();
 			UGameplayStatics::ApplyDamage(OtherActor, Damage, InstigatorController, this, DameTypeClass);
 
-			// Two ways to spawn particle effect, one is to spawn at location, the other is to spawn attached to a component
+			// Two ways to spawn particle effect, one is to spawn at location, the other is to spawn attached to a component	
 			// UGameplayStatics::SpawnEmitterAtLocation(this, HitParticle, GetActorLocation(), GetActorRotation());
-			UGameplayStatics::SpawnEmitterAttached(HitParticle, OtherComp, NAME_None, Hit.ImpactPoint, FRotator::ZeroRotator,
+			UParticleSystemComponent* SpawnedEmitter = UGameplayStatics::SpawnEmitterAttached(HitParticle, OtherComp, NAME_None, Hit.ImpactPoint, FRotator::ZeroRotator,
 			                                      EAttachLocation::KeepWorldPosition, true);
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("SpawnedEmitter is attached to: %s"), *OtherComp->GetOwner()->GetActorNameOrLabel()));
 		}
 	}
 	Destroy();
