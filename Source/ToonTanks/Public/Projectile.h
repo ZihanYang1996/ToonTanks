@@ -8,6 +8,7 @@
 
 class UStaticMeshComponent;
 class UProjectileMovementComponent;
+class UParticleSystem;
 UCLASS()
 class TOONTANKS_API AProjectile : public AActor
 {
@@ -33,6 +34,9 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Components", meta=(AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement;
+
+	UPROPERTY(EditAnywhere, Category="Particles")
+	UParticleSystem* HitParticle;
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
