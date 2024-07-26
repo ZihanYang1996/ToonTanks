@@ -50,6 +50,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	USceneComponent* ProjectileSpawnPoint;
 
+	UPROPERTY(EditAnywhere, Category = "Projectile")
+	UParticleSystem* DeathParticle;
+
 	UPROPERTY(EditAnywhere, Category = "Turret")
 	float TurretRotationSpeed = 50.0f;
 
