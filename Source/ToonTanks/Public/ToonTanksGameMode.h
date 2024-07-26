@@ -25,6 +25,9 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void StartGame();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void GameOver(bool bWonGame);
+
 public:
 	void ActorDie(AActor* DeadActor);
 
@@ -33,4 +36,8 @@ private:
 
 	UPROPERTY(EditAnywhere, Category="Game Loop")
 	float StartDelay = 3.0f;
+
+	int32 TowerCount = 0;
+
+	int32 GetTowerCount();
 };
