@@ -10,6 +10,7 @@ class UCapsuleComponent;
 class UStaticMeshComponent;
 class USceneComponent;
 class AProjectile;
+class USoundBase;
 
 UCLASS()
 class TOONTANKS_API ABasePawn : public APawn
@@ -61,4 +62,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category="Turret")
 	float Damage = 50.0f;
+
+	UPROPERTY(EditAnywhere, Category="Sound")
+	USoundBase* DeathSound;
 };

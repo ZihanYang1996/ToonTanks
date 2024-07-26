@@ -30,6 +30,9 @@ void AProjectile::BeginPlay()
 	Super::BeginPlay();
 
 	Mesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
+
+	// Play sound when projectile is launched
+	UGameplayStatics::PlaySoundAtLocation(this, LaunchSound, GetActorLocation());
 }
 
 // Called every frame
@@ -53,6 +56,8 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 	// 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("InstigatorController: nullptr"));
 	// }
 
+	UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
+	
 	if (OtherActor && OtherActor != this && OtherActor != GetOwner() && OtherComp)
 	{
 		if (AController* InstigatorController = GetOwner()->GetInstigatorController())
