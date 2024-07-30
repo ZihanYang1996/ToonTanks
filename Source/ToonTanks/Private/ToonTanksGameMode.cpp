@@ -22,6 +22,7 @@ void AToonTanksGameMode::ActorDie(AActor* DeadActor)
 	{
 		PlayerTank->HandleDestruction();
 		TankPlayerController->SetPlayerInputEnabled(false);
+		OnTankDeath.Broadcast();
 		GameOver(false);
 	}
 	else if (ATower* DestroyedTower = Cast<ATower>(DeadActor))

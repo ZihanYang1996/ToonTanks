@@ -11,6 +11,9 @@ class ATank;
 /**
  * 
  */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTankDeath);
+
 UCLASS()
 class TOONTANKS_API AToonTanksGameMode : public AGameModeBase
 {
@@ -30,6 +33,8 @@ protected:
 
 public:
 	void ActorDie(AActor* DeadActor);
+
+	FOnTankDeath OnTankDeath;
 
 private:
 	void HandleGameStart();

@@ -30,6 +30,8 @@ private:
 
 	FTimerHandle FireRateTimerHandle;
 
+	bool bIsTankAlive = true;
+
 	UPROPERTY(EditAnywhere, Category="Turret")
 	float FireRate = 2.0f;
 
@@ -39,4 +41,7 @@ private:
 	bool InFiringRange();
 
 	void CheckFireCondition();
+
+	UFUNCTION()
+	void TankDied();
 };
