@@ -42,6 +42,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	{
 		EnhancedInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered, this, &ATank::Move);
 		EnhancedInputComponent->BindAction(IA_Fire, ETriggerEvent::Started, this, &ATank::Fire);
+		EnhancedInputComponent->BindAction(IA_RotateController, ETriggerEvent::Triggered, this, &ATank::RotateControllerWithRightClick);
 	}
 }
 
@@ -121,4 +122,10 @@ void ATank::RotateController(float dt)
 			AddControllerYawInput(1.0f * CameraRotationSpeed * dt);
 		}
 	}
+}
+
+void ATank::RotateControllerWithRightClick(const FInputActionValue& Value)
+{
+	float RotationInput = Value.Get<FVector2D>().X;
+	AddControllerYawInput(RotationInput * CameraRotationSpeed * GetWorld()->GetDeltaSeconds());
 }
