@@ -43,6 +43,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		EnhancedInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered, this, &ATank::Move);
 		EnhancedInputComponent->BindAction(IA_Fire, ETriggerEvent::Started, this, &ATank::Fire);
 		EnhancedInputComponent->BindAction(IA_RotateController, ETriggerEvent::Triggered, this, &ATank::RotateControllerWithRightClick);
+		EnhancedInputComponent->BindAction(IA_RotateControllerChord, ETriggerEvent::Completed, this, &ATank::ChordActionTest);
 	}
 }
 
@@ -128,4 +129,9 @@ void ATank::RotateControllerWithRightClick(const FInputActionValue& Value)
 {
 	float RotationInput = Value.Get<FVector2D>().X;
 	AddControllerYawInput(RotationInput * CameraRotationSpeed * GetWorld()->GetDeltaSeconds());
+}
+
+void ATank::ChordActionTest(const FInputActionValue& Value)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Chord Action Test"));
 }

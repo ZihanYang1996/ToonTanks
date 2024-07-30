@@ -49,12 +49,17 @@ private:
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* IA_RotateController;
 
+	UPROPERTY(EditAnywhere, Category="Input")
+	UInputAction* IA_RotateControllerChord;
+
 
 	APlayerController* TankPlayerController;
 
 	void Move(const FInputActionValue& Value);
 
 	void RotateControllerWithRightClick(const FInputActionValue& Value);
+
+	void ChordActionTest(const FInputActionValue& Value);
 
 	bool GetHitResultUnderCursor(FHitResult& OutHit);
 
